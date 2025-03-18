@@ -9,39 +9,47 @@ namespace Crud.Api.Controllers;
 public class CountriesController : ControllerBase
 {
     private readonly ICountriesService _countriesService;
-    
+
     public CountriesController(ICountriesService countriesService)
     {
         _countriesService = countriesService;
     }
-    
+
     [HttpGet("get-all-countries")]
-    public IActionResult GetAllCountries()
+    public async Task<IActionResult> GetAllCountries()
     {
-        var countries = _countriesService.GetAllCountries();
-        
+        var countries = await _countriesService.GetAllCountriesAsync();
+
         return Ok(countries);
     }
-    
+
     [HttpPost("add-country")]
-    public IActionResult AddCountry([FromBody] CountryAddRequest? request)
+    public async Task<IActionResult> AddCountry([FromBody] CountryAddRequest? request)
     {
-        var country = _countriesService.AddCountry(request);
-        
-        if (country == null)
-            return BadRequest();
-        
+        var country = await _countriesService.AddCountryAsync(request);
+
         return Ok(country);
     }
-    
+
     [HttpGet("get-country-by-id")]
-    public IActionResult GetCountryById([FromQuery] Guid? id)
+    public async Task<IActionResult> GetCountryById([FromQuery] Guid? id)
     {
-        var country = _countriesService.GetCountryById(id);
-        
+        var country = await _countriesService.GetCountryByIdAsync(id);
+
         if (country == null)
             return NotFound();
-        
+
+        return Ok(country);
+    }
+
+    [HttpGet("get-country-by-name")]
+    public async Task<IActionResult> GetCountryByName([FromQuery] string? name)
+    {
+        var country = await _countriesService.GetCountryByNameAsync(name);
+
+        if (country == null)
+            return NotFound();
+
         return Ok(country);
     }
 }

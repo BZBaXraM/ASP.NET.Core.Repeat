@@ -27,7 +27,8 @@ public class PersonResponse
 
         if (obj.GetType() != typeof(PersonResponse)) return false;
 
-        PersonResponse person = (PersonResponse)obj;
+        var person = (PersonResponse)obj;
+
         return PersonId == person.PersonId && PersonName == person.PersonName && Email == person.Email &&
                DateOfBirth == person.DateOfBirth && Gender == person.Gender && CountryId == person.CountryId &&
                Address == person.Address && ReceiveNewsLetters == person.ReceiveNewsLetters;
@@ -38,19 +39,13 @@ public class PersonResponse
         return base.GetHashCode();
     }
 
-    public override string ToString()
-    {
-        return
-            $"Person ID: {PersonId}, Person Name: {PersonName}, Email: {Email}, Date of Birth: {DateOfBirth?.ToString("dd MMM yyyy")}, Gender: {Gender}, Country ID: {CountryId}, Country: {Country}, Address: {Address}, Receive News Letters: {ReceiveNewsLetters}";
-    }
-
     public PersonUpdateRequest ToPersonUpdateRequest()
     {
-        return new PersonUpdateRequest()
+        return new PersonUpdateRequest
         {
             PersonId = PersonId, PersonName = PersonName, Email = Email, DateOfBirth = DateOfBirth,
-            Gender = (GenderOptions)Enum.Parse(typeof(GenderOptions), Gender, true), Address = Address,
-            CountryID = CountryId, ReceiveNewsLetters = ReceiveNewsLetters
+            Gender = Enum.Parse<GenderOptions>(Gender!, true), Address = Address,
+            CountryId = CountryId, ReceiveNewsLetters = ReceiveNewsLetters
         };
     }
 }

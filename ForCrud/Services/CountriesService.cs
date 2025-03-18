@@ -1,4 +1,7 @@
 ﻿using Entities;
+using Entities.Data;
+using Microsoft.EntityFrameworkCore;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTOs;
 
@@ -6,48 +9,75 @@ namespace Services;
 
 public class CountriesService : ICountriesService
 {
-    private readonly List<Country> _countries;
+    private readonly ICountriesRepository _countriesRepository;
 
-    public CountriesService()
+    public CountriesService(ICountriesRepository countriesRepository)
     {
-        _countries = [];
+        _countriesRepository = countriesRepository;
     }
 
-    public List<CountryResponse> GetAllCountries()
+    public async Task<List<CountryResponse>> GetAllCountriesAsync()
     {
-        return _countries.Select(x => x.ToCountryResponse()).ToList();
-    }
+        var countries = await _countriesRepository.GetAllCountriesAsync();
 
-    public CountryResponse? AddCountry(CountryAddRequest? request)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        if (request.CountryName == null)
+        return countries.Select(temp => new CountryResponse
         {
-            throw new ArgumentException(nameof(request.CountryName));
-        }
-
-        if (_countries.Any(temp => temp.CountryName == request.CountryName))
-        {
-            throw new ArgumentException("Given country name already exists");
-        }
-
-        var country = request.ToCountry();
-
-        country.CountryId = Guid.NewGuid();
-
-        _countries.Add(country);
-
-        return country.ToCountryResponse();
+            CountryId = temp.CountryId,
+            CountryName = temp.CountryName
+        }).ToList();
     }
 
-    public CountryResponse? GetCountryById(Guid? id)
+    public async Task<CountryResponse> AddCountryAsync(CountryAddRequest? countryAddRequest)
     {
-        if (id == null)
+        ArgumentNullException.ThrowIfNull(countryAddRequest);
+
+        var country = new Country
+        {
+            CountryName = countryAddRequest.CountryName
+        };
+
+        var addedCountry = await _countriesRepository.AddCountryAsync(country);
+
+        return new CountryResponse
+        {
+            CountryId = addedCountry.CountryId,
+            CountryName = addedCountry.CountryName
+        };
+    }
+
+    public async Task<CountryResponse?> GetCountryByIdAsync(Guid? id)
+    {
+        if (id is null)
+        {
             return null;
+        }
 
-        var countryResponseFromList = _countries.FirstOrDefault(temp => temp.CountryId == id);
+        var country = await _countriesRepository.GetCountryByIdAsync(id.Value);
 
-        return countryResponseFromList?.ToCountryResponse();
+        return country is null
+            ? null
+            : new CountryResponse
+            {
+                CountryId = country.CountryId,
+                CountryName = country.CountryName
+            };
+    }
+
+    public async Task<CountryResponse?> GetCountryByNameAsync(string? name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return null;
+        }
+
+        var country = await _countriesRepository.GetCountryByNameAsync(name);
+
+        return country is null
+            ? null
+            : new CountryResponse
+            {
+                CountryId = country.CountryId,
+                CountryName = country.CountryName
+            };
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
 using ServiceContracts.DTOs;
+using ServiceContracts.Enums;
 
 namespace Crud.Api.Controllers;
 
@@ -16,28 +17,25 @@ public class PersonsController : ControllerBase
     }
 
     [HttpGet("get-all-persons")]
-    public IActionResult GetAllPersons()
+    public async Task<IActionResult> GetAllPersons()
     {
-        var persons = _personsService.GetAllPersons();
+        var persons = await _personsService.GetAllPersonsAsync();
 
         return Ok(persons);
     }
 
     [HttpPost("add-person")]
-    public IActionResult AddPerson([FromBody] PersonAddRequest? request)
+    public async Task<IActionResult> AddPerson([FromBody] PersonAddRequest? request)
     {
-        var person = _personsService.AddPerson(request);
-
-        if (person == null)
-            return BadRequest();
+        var person = await _personsService.AddPersonAsync(request);
 
         return Ok(person);
     }
 
     [HttpGet("get-person-by-id")]
-    public IActionResult GetPersonById([FromQuery] Guid? id)
+    public async Task<IActionResult> GetPersonById([FromQuery] Guid? id)
     {
-        var person = _personsService.GetPersonByPersonId(id);
+        var person = await _personsService.GetPersonByPersonIdAsync(id);
 
         if (person == null)
             return NotFound();
@@ -46,28 +44,35 @@ public class PersonsController : ControllerBase
     }
 
     [HttpGet("get-filtered-persons")]
-    public IActionResult GetFilteredPersons([FromQuery] string searchBy, [FromQuery] string? searchString)
+    public async Task<IActionResult> GetFilteredPersons([FromQuery] string searchBy, [FromQuery] string? searchString)
     {
-        var persons = _personsService.GetFilteredPersons(searchBy, searchString);
+        var persons = await _personsService.GetFilteredPersonsAsync(searchBy, searchString);
 
         return Ok(persons);
     }
 
-    [HttpPut("update-person")]
-    public IActionResult UpdatePerson([FromBody] PersonUpdateRequest? request)
+    [HttpGet("get-sorted-persons")]
+    public async Task<IActionResult> GetSortedPersons([FromQuery] string sortBy, [FromQuery] SortOrderOptions sortOrder)
     {
-        var person = _personsService.UpdatePerson(request);
+        var persons = await _personsService.GetAllPersonsAsync();
 
-        if (person == null)
-            return NotFound();
+        var sortedPersons = _personsService.GetSortedPersons(persons, sortBy, sortOrder);
+
+        return Ok(sortedPersons);
+    }
+
+    [HttpPut("update-person")]
+    public async Task<IActionResult> UpdatePerson([FromBody] PersonUpdateRequest? request)
+    {
+        var person = await _personsService.UpdatePersonAsync(request);
 
         return Ok(person);
     }
 
     [HttpDelete("delete-person")]
-    public IActionResult DeletePerson([FromQuery] Guid? id)
+    public async Task<IActionResult> DeletePerson([FromQuery] Guid? id)
     {
-        var isDeleted = _personsService.DeletePerson(id);
+        var isDeleted = await _personsService.DeletePersonAsync(id);
 
         if (!isDeleted)
             return NotFound();

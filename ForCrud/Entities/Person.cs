@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Entities;
 
 public class Person
@@ -10,4 +12,9 @@ public class Person
     public Guid? CountryId { get; set; }
     public string? Address { get; set; }
     public bool ReceiveNewsLetters { get; set; }
+
+    [Column("TaxIdentificationNumber", TypeName = "varchar(8)")]
+    public string? Tin { get; set; }
+
+    [ForeignKey("CountryId")] public virtual Country? Country { get; set; }
 }
