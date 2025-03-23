@@ -20,15 +20,18 @@ public class PersonsService : IPersonsService
     {
         ArgumentNullException.ThrowIfNull(personAddRequest);
 
-        ValidationHelper.ModelValidation(personAddRequest);
+
+        if (string.IsNullOrWhiteSpace(personAddRequest.PersonName))
+        {
+            throw new ArgumentException("PersonName cannot be null or empty", nameof(personAddRequest.PersonName));
+        }
 
         var person = personAddRequest.ToPerson();
+        person.PersonId = Guid.NewGuid(); // Ensure a new PersonId is generated
 
-        person.PersonId = Guid.NewGuid();
+        await _personsRepository.AddPersonAsync(person);
 
-        var addedPerson = await _personsRepository.AddPersonAsync(person);
-
-        return addedPerson.ToPersonResponse();
+        return person.ToPersonResponse();
     }
 
     public async Task<List<PersonResponse>> GetAllPersonsAsync()

@@ -25,7 +25,7 @@ public class CountriesServiceTest
         var dbContext = dbContextMock.Object;
         dbContextMock.CreateDbSetMock(x => x.Countries, initialCountries);
 
-        _countriesService = new CountriesService(dbContext);
+        _countriesService = new CountriesService(null);
         _fixture = new Fixture();
     }
 
