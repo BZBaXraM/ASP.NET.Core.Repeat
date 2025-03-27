@@ -10,10 +10,12 @@ namespace Crud.Api.Controllers;
 public class PersonsController : ControllerBase
 {
     private readonly IPersonsService _personsService;
+    private readonly ICountriesService _countriesService;
 
-    public PersonsController(IPersonsService personsService)
+    public PersonsController(IPersonsService personsService, ICountriesService countriesService)
     {
         _personsService = personsService;
+        _countriesService = countriesService;
     }
 
     [HttpGet("get-all-persons")]
