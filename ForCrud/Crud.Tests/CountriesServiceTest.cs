@@ -1,10 +1,10 @@
 ﻿using AutoFixture;
-using Entities;
-using Entities.Data;
+using Crud.Core.Domain.Entities;
+using Crud.Core.DTOs;
+using Crud.Core.ServiceContracts;
+using Crud.Core.Services;
+using Crud.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using ServiceContracts;
-using ServiceContracts.DTOs;
-using Services;
 using EntityFrameworkCoreMock;
 
 namespace Crud.Tests;

@@ -1,16 +1,16 @@
 using System.Linq.Expressions;
 using AutoFixture;
-using Entities;
-using Entities.Data;
+using Crud.Core.Domain.Entities;
+using Crud.Core.DTOs;
+using Crud.Core.Enums;
+using Crud.Core.RepositoryContracts;
+using Crud.Core.ServiceContracts;
+using Crud.Core.Services;
+using Crud.Infrastructure.Data;
 using EntityFrameworkCoreMock;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using RepositoryContracts;
-using ServiceContracts;
-using ServiceContracts.DTOs;
-using ServiceContracts.Enums;
-using Services;
 using Xunit.Abstractions;
 
 namespace Crud.Tests;

@@ -1,6 +1,6 @@
+using Crud.Core.DTOs;
+using Crud.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
-using ServiceContracts;
-using ServiceContracts.DTOs;
 
 namespace Crud.Api.Controllers;
 
@@ -16,7 +16,7 @@ public class CountriesController : ControllerBase
     }
 
     [HttpGet("get-all-countries")]
-    public async Task<IActionResult> GetAllCountries()
+    public async Task<ActionResult<List<CountryResponse>>> GetAllCountries()
     {
         var countries = await _countriesService.GetAllCountriesAsync();
 

@@ -1,11 +1,18 @@
-using Entities.Data;
+using Crud.Core.RepositoryContracts;
+using Crud.Core.ServiceContracts;
+using Crud.Core.Services;
+using Crud.Infrastructure.Data;
+using Crud.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Repositories;
-using RepositoryContracts;
-using ServiceContracts;
-using Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("/Logs/Crud_Log.log", rollingInterval: RollingInterval.Day)
+    .MinimumLevel.Information()
+    .CreateLogger();
 
 // Add services to the container.
 
@@ -24,6 +31,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger, dispose: true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,8 +44,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

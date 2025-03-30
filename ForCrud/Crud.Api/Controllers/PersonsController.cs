@@ -1,7 +1,7 @@
+using Crud.Core.DTOs;
+using Crud.Core.Enums;
+using Crud.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
-using ServiceContracts;
-using ServiceContracts.DTOs;
-using ServiceContracts.Enums;
 
 namespace Crud.Api.Controllers;
 

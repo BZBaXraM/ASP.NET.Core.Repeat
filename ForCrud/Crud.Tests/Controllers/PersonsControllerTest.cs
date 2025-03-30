@@ -1,11 +1,11 @@
 using AutoFixture;
 using Crud.Api.Controllers;
+using Crud.Core.DTOs;
+using Crud.Core.Enums;
+using Crud.Core.ServiceContracts;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using ServiceContracts;
-using ServiceContracts.DTOs;
-using ServiceContracts.Enums;
 
 namespace Crud.Tests.Controllers;
 
