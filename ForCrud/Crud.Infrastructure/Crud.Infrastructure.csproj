@@ -11,6 +11,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4"/>
+        <ProjectReference Include="..\Crud.Domain\Crud.Domain.csproj" />
     </ItemGroup>
 
 </Project>

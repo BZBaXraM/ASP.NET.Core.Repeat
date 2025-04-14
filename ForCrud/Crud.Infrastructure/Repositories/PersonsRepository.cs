@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Crud.Core.Domain.Entities;
+using Crud.Domain.Entities;
 using Crud.Core.RepositoryContracts;
 using Crud.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

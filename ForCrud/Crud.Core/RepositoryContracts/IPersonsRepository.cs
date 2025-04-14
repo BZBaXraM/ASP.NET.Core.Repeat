@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Crud.Core.Domain.Entities;
+using Crud.Domain.Entities;
 
 namespace Crud.Core.RepositoryContracts;
 

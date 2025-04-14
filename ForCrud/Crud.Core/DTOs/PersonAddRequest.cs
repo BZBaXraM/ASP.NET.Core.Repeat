@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Crud.Core.Domain.Entities;
+using Crud.Domain.Entities;
 using Crud.Core.Enums;
 
 namespace Crud.Core.DTOs;

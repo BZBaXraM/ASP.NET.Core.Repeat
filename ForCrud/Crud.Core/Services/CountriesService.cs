@@ -1,4 +1,4 @@
-﻿using Crud.Core.Domain.Entities;
+﻿using Crud.Domain.Entities;
 using Crud.Core.DTOs;
 using Crud.Core.RepositoryContracts;
 using Crud.Core.ServiceContracts;

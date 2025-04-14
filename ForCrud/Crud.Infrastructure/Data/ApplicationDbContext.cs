@@ -1,4 +1,4 @@
-using Crud.Core.Domain.Entities;
+using Crud.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Crud.Infrastructure.Data;

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Crud.Core.Domain.Entities;
+namespace Crud.Domain.Entities;
 
 public class Person
 {

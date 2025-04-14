@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Crud.Core.Domain.Entities;
+namespace Crud.Domain.Entities;
 
 public class Country
 {

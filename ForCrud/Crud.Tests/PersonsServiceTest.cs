@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using AutoFixture;
-using Crud.Core.Domain.Entities;
+using Crud.Domain.Entities;
 using Crud.Core.DTOs;
 using Crud.Core.Enums;
 using Crud.Core.RepositoryContracts;
